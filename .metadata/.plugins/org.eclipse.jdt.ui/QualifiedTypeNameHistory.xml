@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="java.awt.Polygon"/>
+    <fullyQualifiedTypeName name="sun.jvm.hotspot.oops.java_lang_Class"/>
+    <fullyQualifiedTypeName name="com.sun.tools.sjavac.Package"/>
+    <fullyQualifiedTypeName name="mypackage.Point"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="Figure.Rectangle"/>
+    <fullyQualifiedTypeName name="Figure.Triangle"/>
+    <fullyQualifiedTypeName name="Stereogram.Cylinder"/>
+    <fullyQualifiedTypeName name="Figure.ClosedFigure"/>
+    <fullyQualifiedTypeName name="Pixel.Pixel"/>
+    <fullyQualifiedTypeName name="Pixel.Pixel.ColorConstant"/>
+    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+    <fullyQualifiedTypeName name="Calendar.MonthlyCalendar"/>
+    <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="java.lang.Comparable"/>
+    <fullyQualifiedTypeName name="java.util.Comparator"/>
+    <fullyQualifiedTypeName name="Person.CompareBirthdate"/>
+    <fullyQualifiedTypeName name="MyDate.MyDate"/>
+    <fullyQualifiedTypeName name="Student.Student"/>
+    <fullyQualifiedTypeName name="java.lang.ArrayStoreException"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="Person.Person"/>
+    <fullyQualifiedTypeName name="CompareArray.CompareArray"/>
+    <fullyQualifiedTypeName name="Person.CompareName"/>
+    <fullyQualifiedTypeName name="Object.CompareBirthdate"/>
+    <fullyQualifiedTypeName name="java.lang.NumberFormatException"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+    <fullyQualifiedTypeName name="java.awt.TextField"/>
+    <fullyQualifiedTypeName name="javax.swing.WindowConstants"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+</qualifiedTypeNameHistroy>

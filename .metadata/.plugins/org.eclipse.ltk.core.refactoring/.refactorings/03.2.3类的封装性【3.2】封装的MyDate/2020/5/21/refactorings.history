@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;MyDate.MYDate.java&apos; to &apos;MyDate.java&apos;&#x0D;&#x0A;- Original project: &apos;03.2.3类的封装性【3.2】封装的MyDate&apos;&#x0D;&#x0A;- Original element: &apos;MyDate.MYDate.java&apos;&#x0D;&#x0A;- Renamed element: &apos;MyDate.MyDate.java&apos;" description="Rename compilation unit &apos;MYDate.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;MyDate{MYDate.java" name="MyDate.java" references="false" stamp="1590225231686" version="1.0"/>
+</session>

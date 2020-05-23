@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete 8 resources" deleteContents="true" description="Delete 8 resources" element1="/02.4.3参数传递【2.8】杨辉三角" element2="/03.4.1类的多态性【3.5】Student类声明多态成员" element3="/实验题" element4="/03.2.5【3.3】深拷贝的Person类" element5="/JAVA2" element6="/02.3.2二维数组【2.6】幻方" element7="/03.2.3类的封装性【3.2】封装的MyDate" element8="/01.2.3包【1.1 1.2】" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="8" stamp="1588239802818"/>&#x0A;<refactoring comment="Delete resource &apos;JAVA2&apos;" deleteContents="false" description="Delete resource &apos;JAVA2&apos;" element1="/JAVA2" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1588239902121"/>
+</session>

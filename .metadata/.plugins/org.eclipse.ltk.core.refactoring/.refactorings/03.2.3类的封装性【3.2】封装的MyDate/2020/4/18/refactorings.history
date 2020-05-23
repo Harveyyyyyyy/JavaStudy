@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;MyDate.Mydate&apos; to &apos;MyDate&apos;&#x0D;&#x0A;- Original project: &apos;03.2.3类的封装性【3.2】封装的MyDate&apos;&#x0D;&#x0A;- Original element: &apos;MyDate.Mydate&apos;&#x0D;&#x0A;- Renamed element: &apos;MyDate.MyDate&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Mydate&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;MyDate{Mydate.java[Mydate" matchStrategy="1" name="MyDate" qualified="false" references="true" similarDeclarations="false" stamp="1588248699116" textual="false" version="1.0"/>
+</session>

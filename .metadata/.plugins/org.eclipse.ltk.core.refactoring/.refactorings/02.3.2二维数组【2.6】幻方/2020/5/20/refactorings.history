@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;MagicSquare&apos; to &apos;02.3.2二维数组【2.6】幻方0/src&apos;&#x0D;&#x0A;- Original project: &apos;02.3.2二维数组【2.6】幻方&apos;&#x0D;&#x0A;- Destination element: &apos;02.3.2二维数组【2.6】幻方0/src&apos;&#x0D;&#x0A;- Original element: &apos;02.3.2二维数组【2.6】幻方/src/MagicSquare&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=02.3.2二维数组【2.6】幻方0/src" element1="/src&lt;MagicSquare" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1589446345253" version="1.0"/>
+</session>

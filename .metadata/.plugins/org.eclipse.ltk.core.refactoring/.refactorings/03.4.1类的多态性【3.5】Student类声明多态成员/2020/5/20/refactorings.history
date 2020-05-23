@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;Student&apos; to &apos;03.4.1类的多态性【3.5】Student类声明多态成员0/src&apos;&#x0D;&#x0A;- Original project: &apos;03.4.1类的多态性【3.5】Student类声明多态成员&apos;&#x0D;&#x0A;- Destination element: &apos;03.4.1类的多态性【3.5】Student类声明多态成员0/src&apos;&#x0D;&#x0A;- Original element: &apos;03.4.1类的多态性【3.5】Student类声明多态成员/src/Student&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=03.4.1类的多态性【3.5】Student类声明多态成员0/src" element1="/src&lt;Student" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1589446454590" version="1.0"/>
+</session>
