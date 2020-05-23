@@ -4,12 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 public class AddFrame extends Frame implements ActionListener {
-	JComboBox<String>jc=new JComboBox<>(new MyComboBox());
 	private Button button;
 	private TextField t1,t2,t3;
 	public AddFrame() {
@@ -17,8 +12,9 @@ public class AddFrame extends Frame implements ActionListener {
 		this.setSize(400, 100);
 		this.setLocation(300, 240);
 		this.setLayout(new FlowLayout());
+		
 		this.add(this.t1=new TextField("10",8));
-		this.add(jc);
+		this.add(new Label("+"));
 		this.add(this.t2=new TextField("20",8));
 		this.add(this.button=new Button("="));
 		this.add(this.t3=new TextField(10));
@@ -46,26 +42,8 @@ public class AddFrame extends Frame implements ActionListener {
 	public void actionPerformed(ActionEvent ev) {
 		int num1 = Integer.parseInt(t1.getText());
 		int num2 = Integer.parseInt(t2.getText());
-		int num3=num1+num2;
-		String str = String.valueOf(num3);
-		t3.setText(str);
-		
-	}
-	class MyComboBox extends AbstractListModel<String> implements ComboBoxModel<String>{
-		String selecteditem="+";
-		String[] test= {"+","-","*","/"};
-		public String getElementAt(int index) {
-			return test[index];
-		}
-		public int getSize() {
-			return test.length;
-		}
-		public void setSelectedItem(Object item) {
-			selecteditem=(String)item;
-		}
-		public Object getSelectedItem() {
-			return selecteditem;
-		}
+	//	t3.setText(t1.getText()+t2.getText());
+		t3.setText("num1+num2");
 		
 	}
 }

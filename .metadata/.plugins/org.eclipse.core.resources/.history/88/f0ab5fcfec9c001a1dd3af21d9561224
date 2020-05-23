@@ -17,6 +17,7 @@ public class AddFrame extends Frame implements ActionListener {
 		this.setSize(400, 100);
 		this.setLocation(300, 240);
 		this.setLayout(new FlowLayout());
+		
 		this.add(this.t1=new TextField("10",8));
 		this.add(jc);
 		this.add(this.t2=new TextField("20",8));
@@ -52,7 +53,7 @@ public class AddFrame extends Frame implements ActionListener {
 		
 	}
 	class MyComboBox extends AbstractListModel<String> implements ComboBoxModel<String>{
-		String selecteditem="+";
+		String selecteditem=null;
 		String[] test= {"+","-","*","/"};
 		public String getElementAt(int index) {
 			return test[index];
