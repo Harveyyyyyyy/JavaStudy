@@ -16,7 +16,6 @@
     <fullyQualifiedTypeName name="Calendar.MonthlyCalendar"/>
     <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
     <fullyQualifiedTypeName name="java.util.Calendar"/>
-    <fullyQualifiedTypeName name="java.lang.Comparable"/>
     <fullyQualifiedTypeName name="java.util.Comparator"/>
     <fullyQualifiedTypeName name="Person.CompareBirthdate"/>
     <fullyQualifiedTypeName name="MyDate.MyDate"/>
@@ -33,4 +32,6 @@
     <fullyQualifiedTypeName name="java.awt.TextField"/>
     <fullyQualifiedTypeName name="javax.swing.WindowConstants"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="java.lang.Comparable"/>
+    <fullyQualifiedTypeName name="java.awt.event.WindowListener"/>
 </qualifiedTypeNameHistroy>

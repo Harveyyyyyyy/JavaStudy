@@ -24,7 +24,7 @@ public class AddFrame extends Frame implements ActionListener{
 	}
 	public class WinClose implements WindowListener{
 		public void windowClosing(WindowEvent event) {
-			666
+			
 		}
 	}
 }
