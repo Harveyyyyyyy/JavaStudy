@@ -1,0 +1,92 @@
+package AddFrame;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.*;
+import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
+public class AddFrame extends JFrame implements ActionListener {
+//	JComboBox<String>jc=new JComboBox<>(new MyComboBox());//..
+	JComboBox<String>jc;
+	String[] test= {"+","-","*","/","%"};
+	private JButton button;
+	private JTextField[] text;
+	public AddFrame() {
+		super("整数算数运算器");
+		this.setSize(600, 100);
+		this.setLocation(300, 240);
+		this.setLayout(new FlowLayout());
+		text=new JTextField[3];
+		this.getContentPane().add(this.text[0]=new JTextField(8));
+		jc=new JComboBox<>(test);
+		this.getContentPane().add(jc);
+//		this.getContentPane().add(jc);
+		this.getContentPane().add(this.text[1]=new JTextField(8));
+		this.getContentPane().add(this.button=new JButton("="));
+		this.getContentPane().add(this.text[2]=new JTextField(10));
+		text[2].setEditable(false);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//Frame		this.addWindowListener(new WinClose());
+		this.button.addActionListener(this);//...Box
+		
+		
+	}
+	public static void main(String[] arg) {
+		new AddFrame();
+	}
+	
+	//Frame CloseWindow
+//	public class WinClose implements WindowListener{
+//		public void windowClosing(WindowEvent event) {
+//			System.exit(0);
+//		}
+//		public void windowOpened(WindowEvent event) {}
+//		public void windowActivated(WindowEvent event) {}
+//		public void windowDeactivated(WindowEvent event) {}
+//		public void windowIconified(WindowEvent event) {}
+//		public void windowDeiconified(WindowEvent event) {}
+//		public void windowClosed(WindowEvent event) {}
+//	}
+	
+	public void actionPerformed(ActionEvent ev) {//int-int  double-double ||first  int try double
+		//try
+		int num1 = Integer.parseInt(text[0].getText());//bug if nullobj nullstr
+		int num2 = Integer.parseInt(text[1].getText());
+		//catch String
+		int num3=0;
+		switch(jc.getSelectedIndex()) {
+		case 0 : num3=num1+num2;break;
+		case 1 : num3=num1-num2;break;
+		case 2 : num3=num1*num2;break;
+		case 3 : num3=num1/num2;break;//   ?/0  if
+		case 4 : num3=num1%num2;break;//   ...
+		}
+			
+		String str = String.valueOf(num3);
+		text[2].setText(str);
+		
+	}
+//	class MyComboBox extends AbstractListModel<String> implements ComboBoxModel<String>{
+//		String selecteditem="+";
+//	    String[] test= {"+","-","*","/","%"};
+//		public String getElementAt(int index) {
+//			return test[index];
+//		}
+//		public int getSize() {
+//			return test.length;
+//		}
+//		public void setSelectedItem(Object item) {
+//			selecteditem=(String)item;
+//		}
+//		public Object getSelectedItem() {
+//			return selecteditem;
+//		}
+//		
+//		
+//	}
+}

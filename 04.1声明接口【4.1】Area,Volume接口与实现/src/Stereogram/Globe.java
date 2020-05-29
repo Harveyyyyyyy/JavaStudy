@@ -13,11 +13,9 @@ public class Globe implements Solid{
 	}
 	public static void main(String[] args) {
 		Globe globe=new Globe(1);
-		System.out.println(globe.area());
-		System.out.println(globe.volume());
 		Area ar=globe;
 		Volume vo=globe;
-		System.out.println(ar.area());
-		System.out.println(vo.volume());
+		System.out.println("表面积"+ar.area());
+		System.out.println("体积"+vo.volume());
 	}
 }

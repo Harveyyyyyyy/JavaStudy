@@ -1,7 +1,7 @@
 package Student;
 import Person.Person;
 import MyDate.MyDate;
-public class Student extends Person{
+public class Student extends Person {
 	public String department,speciality,number;
 	public boolean member;
 	private static int count=0;

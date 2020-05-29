@@ -1,0 +1,62 @@
+package AddFrame;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+
+import AddFrame.AddFrame.WinClose;
+
+public class AddFrame2 extends Frame implements ActionListener,WindowListener {
+	private Button button;
+	private TextField t1,t2,t3;
+	private JRadioButton[] radios;
+	public AddFrame2() {
+		super("整数算数运算器");
+		this.setSize(400, 100);
+		this.setLocation(300, 240);
+		this.setLayout(new FlowLayout());
+		this.add(this.t1=new TextField("10",8));
+		AddPanel();
+		this.add(this.t2=new TextField("20",8));
+		this.add(this.button=new Button("="));
+		this.add(this.t3=new TextField(10));
+		t3.setEditable(false);
+		this.setVisible(true);
+		this.addWindowListener(this);
+		this.button.addActionListener(this);
+		
+	}
+	public void AddPanel() {
+		Panel panel=new Panel(new GridLayout(1,5));
+		String[] str= {"+","-","*","/","%"};
+		ButtonGroup bgroup=new ButtonGroup();
+		this.radios=new JRadioButton[str.length];
+		for(int i=0;i<this.radios.length;i++) {
+			panel.add(this.radios[i]=new JRadioButton(str[i]));
+			bgroup.add(this.radios[i]);
+		}
+		this.radios[0].setSelected(true);
+		this.add(panel);
+	}
+	public void actionPerformed(ActionEvent ev) {
+		int num1 = Integer.parseInt(t1.getText());
+		int num2 = Integer.parseInt(t2.getText());
+		int num3=0;
+		switch(this.radios.) {
+		case 0 : num3=num1+num2;break;
+		case 1 : num3=num1-num2;break;
+		case 2 : num3=num1*num2;break;
+		case 3 : num3=num1/num2;break;
+		case 4 : num3=num1%num2;break;
+		}
+			
+		String str = String.valueOf(num3);
+		t3.setText(str);
+		
+	}
+
+}
