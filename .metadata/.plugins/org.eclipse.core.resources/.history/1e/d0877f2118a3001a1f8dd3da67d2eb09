@@ -24,7 +24,7 @@ public class QueryFrame extends Frame implements ActionListener{
 		this.button_uni.addActionListener(this);
 		
 		this.setVisible(true);
-		this.addWindowListener(new WinClose());
+		this.addWindowListener((WindowListener) this);
 	}
 
 	public void actionPerformed(ActionEvent ev) {

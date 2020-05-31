@@ -48,6 +48,6 @@ public class QueryFrame extends Frame implements ActionListener{
 	public static void main(String[] arg) {
 		new QueryFrame();
 	}
+	
+
 }
-
-
