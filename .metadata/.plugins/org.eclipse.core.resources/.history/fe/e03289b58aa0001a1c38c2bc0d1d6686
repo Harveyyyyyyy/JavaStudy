@@ -1,8 +1,0 @@
-package AddFrame;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-public class AddFrame2 extends Frame implements ActionListener {
-	
-
-}

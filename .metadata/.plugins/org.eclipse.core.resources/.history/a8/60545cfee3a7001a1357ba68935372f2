@@ -1,0 +1,128 @@
+package 实验6;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+public class SpiralJFrame extends JFrame implements ActionListener, ComponentListener {
+    private JButton[] button=new JButton[4];
+    private JTextField[] text=new JTextField[5];
+    String[] str1={"输入图形大小","起点位置：x：","y:","缩放比例","旋转角度"};
+    String [] str2={"9","0","0","1","0"};
+    String[] str3={"选择颜色","画图"," ","缩放","旋转"};
+    private Color color;
+    SpiralCanvas canvas=new SpiralCanvas();
+    int j=1;
+    public SpiralJFrame(){
+        super("阿基米德螺线");
+        Dimension dim=this.getToolkit().getScreenSize();
+        this.setBounds(dim.width/4,dim.height/4,dim.width/2,dim.height/2);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JPanel cmdpanel=new JPanel();
+        this.getContentPane().add(cmdpanel,"North");
+        for(int i=0;i<(str1.length-2);i++)
+        {
+            cmdpanel.add(new JLabel(str1[i]));
+            cmdpanel.add(this.text[i]=new JTextField(str2[i],4));
+
+        }
+        for(int i=0;i<(str3.length-3);i++){
+            cmdpanel.add(this.button[i]=new JButton(str3[i]));
+            this.button[i].addActionListener(this);
+        }
+        cmdpanel.add(new JLabel("缩放比例："));
+        for(int i=3;i<str1.length;i++){
+            cmdpanel.add(this.text[i]=new JTextField(str2[i],4));
+            cmdpanel.add(this.button[i-1]=new JButton(str3[i]));
+            this.button[i-1].addActionListener(this);
+        }
+        cmdpanel.add(new JLabel("旋转角度:"),11);
+        cmdpanel.add(new JLabel("PI"),13);
+        this.color=Color.orange;
+        canvas.thread.start();
+        this.getContentPane().add(canvas,"Center");
+        this.setVisible(true);
+    }
+    public void actionPerformed(ActionEvent event){
+        if(event.getSource()==this.button[0]){
+            Color color=JColorChooser.showDialog(this,"选择颜色",this.color);
+            if(color!=null){
+                this.color=color;
+                if(canvas.thread.getState()!=Thread.State.NEW&&canvas.thread.getState()!=Thread.State.TIMED_WAITING){
+                    canvas.thread=new Thread(canvas);
+                    canvas.thread.start();
+                }
+            }
+        }
+        if(event.getSource()==this.button[1]){
+            if(canvas.thread.getState()!=Thread.State.NEW&&canvas.thread.getState()!=Thread.State.TIMED_WAITING){
+                canvas.thread=new Thread(canvas);
+                canvas.thread.start();
+            }
+        }
+        if(event.getSource()==this.button[2]){
+            if(canvas.thread.getState()!=Thread.State.NEW&&canvas.thread.getState()!=Thread.State.TIMED_WAITING){
+                canvas.thread=new Thread(canvas);
+                canvas.thread.start();
+            }
+        }
+        if(event.getSource()==this.button[3]){
+            if(canvas.thread.getState()!=Thread.State.NEW&&canvas.thread.getState()!=Thread.State.TIMED_WAITING){
+                canvas.thread=new Thread(canvas);
+                canvas.thread.start();
+            }
+        }
+    }
+    public void componentResized(ComponentEvent event){
+
+
+    }
+    public void componentMoved(ComponentEvent event){}
+    public void componentShown(ComponentEvent event){}
+    public void componentHidden(ComponentEvent event){}
+
+
+    public class SpiralCanvas extends Canvas implements Runnable{
+        Thread thread=new Thread(this);
+        public void paint(Graphics g) {
+            g.setColor(SpiralJFrame.this.color);
+            int x0 = this.getWidth() / 2;
+            int y0 = this.getHeight() / 2;
+            g.drawLine(0, y0, x0 * 2, y0);
+            g.drawLine(x0, 0, x0, y0 * 2);
+            for (int i = 0; i <j; i++) {
+                double angle = i * Math.PI / 512;
+                double a = Double.parseDouble(text[3].getText()) * Double.parseDouble(text[0].getText());
+                double radius = a * angle;
+                int x = (int) (radius * Math.cos(angle + Double.parseDouble(text[4].getText()) * Math.PI));
+                int y = (int) (radius * Math.sin(angle + Double.parseDouble(text[4].getText()) * Math.PI));
+                g.fillOval(x0 + x + Integer.parseInt(text[1].getText()), y0 + y + Integer.parseInt(text[2].getText()), 2, 2);
+            }
+
+        }
+        public void run() {
+            while (true){
+                if(j>2048)
+                {
+                    j=1;
+                    this.thread.interrupt();
+                }
+                else{
+                    j+=150;
+                    this.repaint();
+                }
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+    }
+    }
+
+    public static void main(String[] args) {
+       new SpiralJFrame();
+
+    }
+}
