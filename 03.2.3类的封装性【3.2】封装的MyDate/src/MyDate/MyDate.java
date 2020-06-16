@@ -39,8 +39,6 @@ public class MyDate implements Comparable<MyDate>{
 		count=y/4+1;
 		total=(this.year-1900)*365+count+allMonthDay(this.month-1)+day;
 		int week=total%7;
-	//	System.out.println(Week.charAt(week-1));
-	//	char result=Week.charAt(week-1);
 	    return Week.charAt(week);
 	}
 	public static int allMonthDay(int month) {

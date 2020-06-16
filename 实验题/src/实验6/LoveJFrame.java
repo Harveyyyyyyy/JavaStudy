@@ -3,11 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
-public class LoveJFrame extends JFrame implements ActionListener{
+public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 	private JButton[] buttons;
 	private Color color;
 	private JTextField[] text;
 	private LoveCanvas lovecanvas;
+	private MessageJDialog jdialog;
 	int n=1;
 	String[] textstr= {"大小","位置x:","y:","缩放比例","旋转角度"};
 	String[] buttonstr= {"选择颜色","启动","中断"};
@@ -30,12 +31,14 @@ public class LoveJFrame extends JFrame implements ActionListener{
 			cmdpanel.add(new JLabel(textstr[i]));
 			cmdpanel.add(this.text[i]=new JTextField(numstr[i],3));
 			this.text[i].addActionListener(this);
+			this.text[i].addCaretListener(this);
 		}
 		cmdpanel.add(new JLabel("PI"));
 		lovecanvas=new LoveCanvas();
 		this.color=Color.red;
 		this.getContentPane().add(this.lovecanvas,"Center");
 		this.setVisible(true);
+		this.jdialog=new MessageJDialog();
 	}
 	public void actionPerformed(ActionEvent ev) {
 		if(ev.getSource()==this.buttons[0]) {
@@ -58,7 +61,35 @@ public class LoveJFrame extends JFrame implements ActionListener{
 		}
 			
 	}
-	public class LoveCanvas extends Canvas implements Runnable{
+	public void caretUpdate(CaretEvent ev) {
+		for(int i=0;i<textstr.length;i++) {
+			if(text[i].getText().isEmpty()) {
+				this.text[i].setText("");
+			}else 
+				try {
+					double x=Double.parseDouble(text[i].getText());
+				}catch(NumberFormatException ex) {
+					this.jdialog.show("\""+text[i].getText()+"\"不能转换成浮点数.");
+				}
+		}
+			
+	}
+	private class MessageJDialog extends JDialog{
+		private JLabel jlabel;
+		private MessageJDialog() {
+			super(LoveJFrame.this,"提示",true);
+			this.setSize(420, 110);
+			this.jlabel=new JLabel("",JLabel.CENTER);
+			this.getContentPane().add(this.jlabel);
+			this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		}
+		private void show(String message) {
+			this.jlabel.setText(message);
+			this.setLocation(LoveJFrame.this.getX()+100, LoveJFrame.this.getY()+100);
+			this.setVisible(true);
+		}
+	}
+	private class LoveCanvas extends Canvas implements Runnable{
 		Thread thread=new Thread(this);
 		public void paint(Graphics g) {
 			g.setColor(Color.black);
@@ -81,7 +112,6 @@ public class LoveJFrame extends JFrame implements ActionListener{
 			while(true) {
 				if(n>1000) {
 					n=1;
-				this.thread.interrupt();
 		    	}else {
 					n=n+100;
 					this.repaint();
