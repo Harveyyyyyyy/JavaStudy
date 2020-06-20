@@ -1,20 +1,38 @@
 package MyDate;
+
+import DateFormatException.DateFormatException;
+
 public class MyDate implements Comparable<MyDate>{
 	private int year,month,day;
 	private static int thisYear;
 	static {
 		thisYear=2020;
 	}
-	public MyDate(int year,int month,int day){
+	public MyDate(int year,int month,int day) throws DateFormatException{
 		this.set(year,month,day);
 	}
 	public MyDate() {
 		this(1970,1,1);
 	}
+	public MyDate(String datestr) throws NumberFormatException,DateFormatException{
+		if(datestr.isEmpty())
+			throw new DateFormatException("空串，日期错误");
+		int i=datestr.indexOf('年'),j=datestr.indexOf('月',i),k=datestr.indexOf('日',j);
+		int year=Integer.parseInt(datestr.substring(0, i));
+		int month=Integer.parseInt(datestr.substring(i+1, j));
+		int day=Integer.parseInt(datestr.substring(j+1, k));
+		this.set(year,month,day);
+	}
 	public MyDate(MyDate date) {
 		this.set(date);
 	}
-	public void set(int year,int month,int day) {
+	public void set(int year,int month,int day)throws DateFormatException{
+		if(year<=-2000||year>2500)
+			throw new DateFormatException(year+"，年份不合适，有效年份为-2000~2500。");
+		if(month<1||month>12)
+			throw new DateFormatException(month+"月，月份错误");
+		if(day<1||day>MyDate.daysOfMonth(year, month))
+			throw new DateFormatException(year+"年"+month+"月"+day+"日，日期错误");
 		this.year=year;
 		this.month=month;
 		this.day=day;
@@ -98,14 +116,33 @@ public class MyDate implements Comparable<MyDate>{
 		}
 	}
 	public MyDate daysAfter(int n)   {
-		MyDate dn=new MyDate(this);
-		if((this.day+n)>this.daysOfMonth()) {
-			dn.month=(this.month%12+(this.day+n)/this.daysOfMonth())%12;
-			if((this.month%12+(this.day+n)/this.daysOfMonth())>12)
-				dn.year++;
-		}
-		dn.day=(this.day%this.daysOfMonth()+n%31);
-		return dn;
+//		MyDate dn=new MyDate(this);
+//		if((this.day+n)>this.daysOfMonth()) {
+//			dn.month=(this.month%12+(this.day+n)/this.daysOfMonth())%12;
+//			if((this.month%12+(this.day+n)/this.daysOfMonth())>12)
+//				dn.year++;
+//		}
+//		dn.day=(this.day%this.daysOfMonth()+n%31);
+//		return dn;
+		MyDate date=new MyDate(this);
+		while(n>0)
+			if(date.day+n<=date.daysOfMonth()) {
+				date.day+=n;
+				n=0;
+			}else {
+				n-=date.daysOfMonth()-date.day;
+				date.day=0;
+				date.month++;
+				if(date.month>12) {
+					date.month=1;
+					date.year++;
+					while(n>365) {
+						n-=date.isLeapYear()?366:365;
+						date.year++;
+					}
+				}
+			}
+		return date;
 		}
 		
 	public MyDate yesterday() {
@@ -141,6 +178,7 @@ public class MyDate implements Comparable<MyDate>{
 		MyDate d3=new MyDate(2020,5,9);
 		System.out.println(d3+"这天是"+d3.getWeek());
 		System.out.println(d3+"这天的后31天为"+d3.daysAfter(31));
+//		new MyDate("2019年2月29日");
 		
 
 	}

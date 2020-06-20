@@ -6,7 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/03.2.5【3.3】深拷贝的Person类"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/03.2.3类的封装性【3.2】封装的MyDate"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/03.2.5【3.3】深拷贝的Person类"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/05.2.3【5.3】自定义日期类异常"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
