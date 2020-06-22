@@ -7,6 +7,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 	private JButton[] buttons;
 	private Color color;
 	private JTextField[] text;
+	private JTextField sleeptime;
 	private LoveCanvas lovecanvas;
 	private MessageJDialog jdialog;
 	int n=1;
@@ -20,7 +21,11 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel cmdpanel=new JPanel();
+		JPanel sleeppanel=new JPanel();
 		this.getContentPane().add(cmdpanel,"North");
+		this.getContentPane().add(sleeppanel,"South");
+		sleeppanel.add(new JLabel("sleeptime"));
+		sleeppanel.add(sleeptime=new JTextField("500",10));
 		this.buttons=new JButton[buttonstr.length];
 		for(int i=0;i<buttonstr.length;i++) {
 			cmdpanel.add(this.buttons[i]=new JButton(buttonstr[i]));
@@ -64,7 +69,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 	public void caretUpdate(CaretEvent ev) {
 		for(int i=0;i<textstr.length;i++) {
 			if(text[i].getText().isEmpty()) {
-				this.text[i].setText("");
+				this.jdialog.show("该空不能为空");
 			}else 
 				try {
 					double x=Double.parseDouble(text[i].getText());
@@ -117,7 +122,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 					this.repaint();
 				}
 				try {
-					Thread.sleep(100);	
+					Thread.sleep(Integer.parseInt(sleeptime.getText()));	
 				}catch(InterruptedException e) {
 					break;
 				}
