@@ -35,7 +35,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 		for(int i=0;i<textstr.length;i++) {
 			cmdpanel.add(new JLabel(textstr[i]));
 			cmdpanel.add(this.text[i]=new JTextField(numstr[i],3));
-			this.text[i].addActionListener(this);
+//			this.text[i].addActionListener(this);
 			this.text[i].addCaretListener(this);
 		}
 		cmdpanel.add(new JLabel("PI"));
@@ -68,9 +68,11 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 	}
 	public void caretUpdate(CaretEvent ev) {
 		for(int i=0;i<textstr.length;i++) {
-			if(text[i].getText().isEmpty()) {
+			if(text[i].getText().isEmpty()||text[i].getText()=="") {
 				this.jdialog.show("该空不能为空");
-			}else 
+			}else if(Double.parseDouble(text[i].getText())<0){
+				this.jdialog.show("该空不能为负数");
+			}else
 				try {
 					double x=Double.parseDouble(text[i].getText());
 				}catch(NumberFormatException ex) {
