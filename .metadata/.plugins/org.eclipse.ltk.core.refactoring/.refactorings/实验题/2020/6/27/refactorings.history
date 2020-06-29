@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;LoveJFrame.java&apos; to &apos;大数据191-202190338-周家辉-第6章实验/src&apos;&#x0D;&#x0A;- Original project: &apos;实验题&apos;&#x0D;&#x0A;- Destination element: &apos;大数据191-202190338-周家辉-第6章实验/src&apos;&#x0D;&#x0A;- Original element: &apos;实验6.LoveJFrame.java&apos;" description="Copy compilation unit" destination="=大数据191-202190338-周家辉-第6章实验/src" element1="/src&lt;实验6{LoveJFrame.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1593406542688" units="1" version="1.0"/>
+</session>

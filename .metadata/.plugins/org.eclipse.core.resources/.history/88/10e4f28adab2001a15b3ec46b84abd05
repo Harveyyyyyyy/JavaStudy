@@ -1,5 +1,0 @@
-package CompareArray;
-
-public interface Comparator {
-
-}

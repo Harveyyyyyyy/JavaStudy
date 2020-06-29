@@ -46,23 +46,32 @@ public class MonthlyWageJFrame extends JFrame implements ActionListener,ChangeLi
 
 	public void actionPerformed(ActionEvent event)
 	{
-		
-		int sum=0;
-		try {
+		int sum=0;double j=0;
+		try {	
 	    for(int row=0;row<12;row++)
 	    	{
+	    	 if(this.tablemodel.getValueAt(row, 1)!=null&&!this.tablemodel.getValueAt(row, 1).equals("0")) {
 	    	 sum+=Integer.parseInt((String) this.tablemodel.getValueAt(row,1));
-	    	}
+	    	 j++;
+	    	   }
+	    	 }
 		}catch(NumberFormatException ex) {
-			System.out.println("字符串不能按十进制转换为整数,"+ex.toString());
+			JOptionPane.showMessageDialog(this, "字符串不能按十进制转换为整数"+ex.toString());
+			return;
 	}
-	    double avg=sum/12.0;
+	    double avg;
+	    if(j==0)
+	    	avg=0;
+	    else 
+	    	avg=sum/j;
+	    
 		this.tablemodel.setValueAt(String.valueOf(sum), 12, 1);
         this.tablemodel.setValueAt(String.valueOf(avg), 13, 1);
         }
+
 	public void stateChanged(ChangeEvent ev) {
 		for(int row=0;row<14;row++)
-			this.tablemodel.setValueAt("", row, 1);
+			this.tablemodel.setValueAt(null, row, 1);
 		
 	}
 	
