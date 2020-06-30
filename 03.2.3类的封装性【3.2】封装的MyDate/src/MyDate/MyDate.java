@@ -2,7 +2,7 @@ package MyDate;
 
 import DateFormatException.DateFormatException;
 
-public class MyDate implements Comparable<MyDate>{
+public class MyDate implements Comparable<MyDate>,java.io.Serializable{
 	private int year,month,day;
 	private static int thisYear;
 	static {
