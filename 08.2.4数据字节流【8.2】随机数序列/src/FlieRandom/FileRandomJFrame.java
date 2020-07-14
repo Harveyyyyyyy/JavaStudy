@@ -8,6 +8,7 @@ public class FileRandomJFrame extends JFrame implements ActionListener{
 	protected JTextField text_filename,text_count;
 	protected DefaultTableModel tablemodel;
 	
+	
 	public FileRandomJFrame(String filename) {
 		super("Ëæ»úÊýÐòÁÐ");
 		this.setBounds(300, 240, 530, 200);
