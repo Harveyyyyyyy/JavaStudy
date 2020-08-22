@@ -2,6 +2,7 @@ package FilePerson;
 import javax.swing.*;
 import java.io.*;
 public class ListModelObjectFile{
+	//´ò¿ª
 	public static<T> void readFrom(String filename,DefaultListModel<T> listmodel) {
 		try {
 			InputStream in=new FileInputStream(filename);
@@ -23,6 +24,7 @@ public class ListModelObjectFile{
 		}catch(IOException ex) {}
 		}
 	
+	//±£´æ
 public static <T> void writeTo(String filename,ListModel<T> listmodel) {
 	try {
 		OutputStream out=new FileOutputStream(filename);

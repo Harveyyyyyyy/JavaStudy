@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Pixel.java&apos; to &apos;课程设计题/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;04.2【4.2】像素类与内部类、接口&apos;&#x0D;&#x0A;- Destination element: &apos;课程设计题/src/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;Pixel.Pixel.java&apos;" description="Copy compilation unit" destination="=课程设计题/src&lt;" element1="/src&lt;Pixel{Pixel.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1597309746234" units="1" version="1.0"/>
+</session>

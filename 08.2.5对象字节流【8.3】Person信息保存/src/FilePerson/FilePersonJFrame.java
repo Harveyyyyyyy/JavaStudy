@@ -21,7 +21,7 @@ public class FilePersonJFrame extends PersonJFrame implements WindowListener{
 		
 	}
 	public void windowClosing(WindowEvent e) {
-		ListModelObjectFile.writeTo(this.filename,this.listmodel);
+		ListModelObjectFile.writeTo(this.filename,this.listmodel);//±£´æ
 	}
 	public void windowClosed(WindowEvent e) {
 		

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;mypackage&apos; to &apos;课程设计题/src/课程设计题&apos;&#x0D;&#x0A;- Original project: &apos;0.1.2.3包【1.1 1.2】Point&apos;&#x0D;&#x0A;- Destination element: &apos;课程设计题/src/课程设计题&apos;&#x0D;&#x0A;- Original element: &apos;0.1.2.3包【1.1 1.2】Point/src/mypackage&apos;" description="Copy package" destination="=课程设计题/src&lt;课程设计题" element1="/src&lt;mypackage" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1597307030626" version="1.0"/>
+</session>

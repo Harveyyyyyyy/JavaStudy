@@ -1,0 +1,19 @@
+
+public class Love  {
+	int x;
+	int y;
+	double angle;
+	double a;
+	double radius;
+	public Love() {
+		for(int i=0;i<1200;i++) {
+			 angle=i*Math.PI/512;
+//			 a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+			 a=7*10;
+			 radius=a*(1-Math.cos(angle));
+//			 x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+//			 y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+			 x=(int)Math.round(radius*Math.cos(angle+4.7));
+			 y=(int)Math.round(radius*Math.sin(angle+4.7));
+	}
+}

@@ -3,13 +3,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
-public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
+public class LoveJFrame extends JFrame implements ActionListener,CaretListener,Runnable{
 	private JButton[] buttons;
 	private Color color;
 	private JTextField[] text;
 	private JTextField sleeptime;
 	private LoveCanvas lovecanvas;
 	private MessageJDialog jdialog;
+	private Thread thread;
 	int n=1;
 	String[] textstr= {"大小","位置x:","y:","缩放比例","旋转角度"};
 	String[] buttonstr= {"选择颜色","启动","中断"};
@@ -40,6 +41,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 		}
 		cmdpanel.add(new JLabel("PI"));
 		lovecanvas=new LoveCanvas();
+		thread=new Thread(this);
 		this.color=Color.red;
 		this.getContentPane().add(this.lovecanvas,"Center");
 		this.setVisible(true);
@@ -53,14 +55,14 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 		}
 		}
 	    if(ev.getSource()==this.buttons[1]) {
-			if(lovecanvas.thread.getState()!=Thread.State.NEW)
-				lovecanvas.thread=new Thread(lovecanvas);
-			lovecanvas.thread.start();
+			if(this.thread.getState()!=Thread.State.NEW)
+				this.thread=new Thread(this);
+			this.thread.start();
 			this.buttons[1].setEnabled(false);
 			this.buttons[2].setEnabled(true);
 		}
 	    if(ev.getSource()==this.buttons[2]) {
-			lovecanvas.thread.interrupt();
+			this.thread.interrupt();
 			this.buttons[1].setEnabled(true);
 			this.buttons[2].setEnabled(false);
 		}
@@ -96,8 +98,8 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 			this.setVisible(true);
 		}
 	}
-	private class LoveCanvas extends Canvas implements Runnable{
-		Thread thread=new Thread(this);
+	private class LoveCanvas extends Canvas{
+//		Thread thread=new Thread(this);
 		public void paint(Graphics g) {
 			g.setColor(Color.black);
 			int x0=this.getWidth()/2;
@@ -106,7 +108,7 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 			g.drawLine(x0,0,x0,y0*2);
 			g.setColor(LoveJFrame.this.color);
 			
-				for(int i=0;i<n;i++) {
+				for(int i=0;i<n;i++) {  //集合
 					double angle=i*Math.PI/512;
 					double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
 					double radius=a*(1-Math.cos(angle));
@@ -115,24 +117,40 @@ public class LoveJFrame extends JFrame implements ActionListener,CaretListener{
 					g.fillOval(x0+x+Integer.parseInt(text[1].getText()), y0+y+Integer.parseInt(text[2].getText()), 2, 2);
 			}
 			}
-		public void run() {
-			while(true) {
-				if(n>1000) {
-					n=1;
-		    	}else {
-					n=n+100;
-					this.repaint();
-				}
-				try {
-					Thread.sleep(Integer.parseInt(sleeptime.getText()));	
-				}catch(InterruptedException e) {
-					break;
-				}
-			}
-		}
+//		public void run() {
+//			while(true) {
+//				if(n>1000) {
+//					n=1;
+//		    	}else {
+//					n=n+100;
+//					this.repaint();
+//				}
+//				try {
+//					Thread.sleep(Integer.parseInt(sleeptime.getText()));	
+//				}catch(InterruptedException e) {
+//					break;
+//				}
+//			}
+//		}
 		}
 	
 	public static void main(String args[]) {
 		new LoveJFrame();
+	}
+	public void run() {
+		while(true) {
+			if(n>1000) {
+				n=1;
+	    	}else {
+				n=n+100;
+				lovecanvas.repaint();
+			}
+			try {
+				Thread.sleep(Integer.parseInt(sleeptime.getText()));	
+				lovecanvas.repaint();
+			}catch(InterruptedException e) {
+				break;
+			}
+		}
 	}
 	}

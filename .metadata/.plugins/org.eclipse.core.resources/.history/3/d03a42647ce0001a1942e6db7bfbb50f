@@ -1,0 +1,30 @@
+import java.awt.*;
+import javax.swing.*;;
+public class Love{
+	protected int x,x0;
+	protected int y,y0;
+	private double angle;
+	private double a;
+	private double radius;
+	public Love(JTextField[] text) {
+		for(int i=0;i<1200;i++) {
+			 angle=i*Math.PI/512;
+			 a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+			 radius=a*(1-Math.cos(angle));
+			 x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+			 y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+//			 gr.fillOval(x0+x+Integer.parseInt(text[1].getText()), y0+y+Integer.parseInt(text[2].getText()),1,1);
+	}
+	}
+		
+	public void LovePaint(int n,JTextField[] text,Graphics gr) {
+		for(int i=0;i<n;i++) {
+			 angle=i*Math.PI/512;
+			 a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+			 radius=a*(1-Math.cos(angle));
+			 x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+			 y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+			 gr.fillOval(x0+x+Integer.parseInt(text[1].getText()), y0+y+Integer.parseInt(text[2].getText()), 1, 1);
+		}
+}
+}
