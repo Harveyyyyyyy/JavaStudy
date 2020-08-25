@@ -2,7 +2,7 @@
 import java.awt.*;
 
 public class Pixel extends Point{
-	private Color color;
+	protected Color color;
 	public Pixel(Point point,Color color) {
 		super(point);
 		this.color=color;

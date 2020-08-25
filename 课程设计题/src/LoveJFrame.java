@@ -10,10 +10,12 @@
 //Point 试2020,8,18 Line 完成Socket测试
 // Point 2020,8,19 From Line to Love 完成Socket通信 Pixel 的传输
 //最小化打开不能画出来 2020，8，20 (Problem) 
-//@Harveyyyyyyy
+//2020,8.25解决Socket和iofile问题 +++待解决list存储问题+++** list测试完毕 
+//@Harveyyyyyyy 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 public class LoveJFrame extends JFrame implements ActionListener,CaretListener,
-WindowListener,Runnable{
+Runnable{
 	private JButton[] buttons;
 	private JButton readButton,writeButton;
 	private Color color;
@@ -30,13 +32,15 @@ WindowListener,Runnable{
 	private JTextField sleeptime;
 	private LoveCanvas lovecanvas;
 	private MessageJDialog jdialog;
-	private ArrayList<Pixel> list;
+	private ArrayList<Point> list;
 	private Socket socket;
 	private Thread socketThread;
 	private ObjectOutputStream objout;
-    private int i=0;
-    private Point lovepoint=new Point(),endpoint;
+    private int n=1;;
+    private Point lovepoint=new Point();
 	public JPanel cmdpanel,sleeppanel;
+	protected JFileChooser fchooser;
+	private File file;
 	String[] textstr= {"大小","位置x:","y:","缩放比例","旋转角度"};
 	String[] buttonstr= {"选择颜色","启动","中断"};
 	String[] numstr= {"7","0","0","10","4.7"};
@@ -74,9 +78,8 @@ WindowListener,Runnable{
 		this.getContentPane().add(this.lovecanvas,"Center");
 		this.setVisible(true);
 		this.jdialog=new MessageJDialog();
-		this.addWindowListener(this);
 		this.objout=null;
-		this.list=new ArrayList<Pixel>(1000000);
+		this.list=new ArrayList<Point>();
 	}
 	
 	public LoveJFrame(String name,String host,int port) throws IOException{
@@ -107,6 +110,7 @@ WindowListener,Runnable{
 			lovecanvas.thread.start();
 			this.buttons[1].setEnabled(false);
 			this.buttons[2].setEnabled(true);
+			this.listitem();
 	    }
 	    if(ev.getSource()==this.buttons[2]) {
 	    	lovecanvas.thread.interrupt();
@@ -114,12 +118,24 @@ WindowListener,Runnable{
 			this.buttons[2].setEnabled(false);
 			this.print();
 		}
-	    if(ev.getSource()==this.writeButton) 
-	    	CollectionFile.writeTo(getTitle(),this.list);  //保存  
-	    if(ev.getSource()==this.readButton) {
-	    	CollectionFile.readFrom(getName(), this.list);//打开时要重画 读取对象
-	    	this.lovecanvas.repaint();
+	    
+	    //保存文件！
+	    if(ev.getSource()==this.writeButton) {
+	    	 this.fchooser=new JFileChooser(new File("D:\\","心形线"));
+	    if (fchooser.showSaveDialog(this)==0) {
+            CollectionFile.writeTo(this.fchooser.getSelectedFile().getName(),list);
+        }
 	    }
+	    
+	    //打开文件！
+	    if(ev.getSource()==this.readButton) {
+	    	this.fchooser=new JFileChooser(new File("D:\\","心形线"));
+	    	if (fchooser.showOpenDialog(this)==0) {
+	    	    this.file = fchooser.getSelectedFile();
+	    	    CollectionFile.readFrom(this.file.getName(), this.list);//打开时要重画 读取对象
+	    	    this.lovecanvas.repaint();
+	   }
+    }
 	    }	
 	//异常处理 输入格式错误之类
 	public void caretUpdate(CaretEvent ev) {
@@ -164,37 +180,29 @@ WindowListener,Runnable{
 			g.drawLine(0, y0, x0*2, y0);
 			g.drawLine(x0,0,x0,y0*2);
 			g.setColor(LoveJFrame.this.color);
-			g.fillOval(x0+lovepoint.x, y0+lovepoint.y, 2, 2);
+			for(int i=0;i<list.size();i++) {
+				try {
+				lovepoint=list.get(i);
+				}catch(IndexOutOfBoundsException ex) {		
+				}
+				g.fillOval(x0+lovepoint.x, y0+lovepoint.y, 1, 1);
+				try {
+					if(objout!=null)
+						objout.writeObject(lovepoint);
+				}catch(IOException ex) {
+				}
+				}
 			}
+	 
+			
 		
 		public void update(Graphics g) {
 			this.paint(g);
 		}
-		//多此一举 同paint来画 
-//		public void draw(Graphics g,ArrayList<Pixel> list) {
-//			g.setColor(LoveJFrame.this.color);
-//			for(int i=0;i<list.size();i++) {
-//				if(list.get(i)!=null)
-//			       g.fillOval(list.get(i).x+x0, list.get(i).y+y0, 2, 2);
-//		}
-//		}
 		
 		//画布中画画的线程run方法 （内部类）
 		public void run() {
-			while(true&i<1200) {
-				i++;
-					double angle=i*Math.PI/512;
-					double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
-					double radius=a*(1-Math.cos(angle));
-					lovepoint.x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
-					lovepoint.y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));		
-				endpoint=new Point(lovepoint.x,lovepoint.y);
-				list.add(new Pixel(lovepoint,LoveJFrame.this.color));
-				try {
-					if(objout!=null)
-						objout.writeObject(endpoint);
-				}catch(IOException ex) {
-				}
+			while(true) {
 				try {
 					Thread.sleep(Integer.parseInt(sleeptime.getText()));
 					lovecanvas.repaint();
@@ -203,24 +211,9 @@ WindowListener,Runnable{
 				}
 			}
 		}
-		}
+	 }
+		
 	 
-	
-	//window事件处理 即最小化和最大化对集合的处理
-	public void windowOpened(WindowEvent e) {}
-	public void windowClosing(WindowEvent e) {}
-	public void windowClosed(WindowEvent e) {}
-	public void windowIconified(WindowEvent e) {}
-	public void windowDeiconified(WindowEvent e) {}
-	public void windowActivated(WindowEvent e) {
-//		for(int i=0;i<list.size();i++) {
-//			if(list.get(i)!=null)
-//				lovepoint=list.get(i);
-//		    lovecanvas.paint(lovecanvas.getGraphics());   repaint**
-//		}
-	}
-	public void windowDeactivated(WindowEvent e) {}
-	
 	
 	//Socket通信的线程run方法
 	public void run() {
@@ -242,19 +235,31 @@ WindowListener,Runnable{
 		}
 	}
 	 
-	public void print() {
-		for(int i=0;i<list.size();i++) {
-			if(list.get(i)!=null)
-			  System.out.println(list.get(i).toString());
-		}
-	}
 	
 	
 	
 	
 	//main 主函数
 	public static void main(String args[]) throws IOException {
-           new LoveJFrame("心形线.obj","127.0.0.1", 10011);
+           new LoveJFrame("心形线","127.0.0.1", 10011);
+	}
+	//测试 给list初值
+	public void listitem() {
+		for(int i=0;i<1200;i++) {
+			double angle=i*Math.PI/512;
+			double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+			double radius=a*(1-Math.cos(angle));
+			int x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+			int y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+			list.add(new Point(x,y));
+		}
+	}
+	//测试 判断list中是否有值
+	public void print() {
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i)!=null)
+			  System.out.println(list.get(i).toString());
+		}
 	}
 	
 	

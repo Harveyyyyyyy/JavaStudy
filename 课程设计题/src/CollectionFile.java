@@ -16,7 +16,9 @@ public class CollectionFile {
 			}
 			objin.close();
 			in.close();
-		}catch(IOException | ClassNotFoundException ex) {}
+		}catch (FileNotFoundException ex){
+            JOptionPane.showMessageDialog(null,"\""+filename+"\"文件不存在.");
+        }catch(IOException | ClassNotFoundException ex) {}
 	}
 	
 	public static<T>void writeTo(String filename,Collection<T> coll){//保存

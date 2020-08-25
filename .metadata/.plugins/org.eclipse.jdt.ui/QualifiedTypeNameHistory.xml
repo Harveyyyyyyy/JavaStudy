@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.awt.GridLayout"/>
-    <fullyQualifiedTypeName name="java.lang.Thread.State"/>
     <fullyQualifiedTypeName name="javax.swing.JRadioButton"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="FlieRandom.FileRandomJFrame"/>
@@ -44,7 +42,6 @@
     <fullyQualifiedTypeName name="java.io.FileOutputStream"/>
     <fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
     <fullyQualifiedTypeName name="Pixel"/>
-    <fullyQualifiedTypeName name="CollectionFile"/>
     <fullyQualifiedTypeName name="LoveJFrameServer"/>
     <fullyQualifiedTypeName name="java.awt.Canvas"/>
     <fullyQualifiedTypeName name="java.io.EOFException"/>
@@ -57,7 +54,10 @@
     <fullyQualifiedTypeName name="java.awt.Rectangle"/>
     <fullyQualifiedTypeName name="java.awt.Graphics"/>
     <fullyQualifiedTypeName name="LoveJFrame.reDraw"/>
+    <fullyQualifiedTypeName name="LoveJFrame.LoveCanvas"/>
     <fullyQualifiedTypeName name="LoveJFrame"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="LoveJFrame.LoveCanvas"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="CollectionFile"/>
+    <fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
 </qualifiedTypeNameHistroy>
