@@ -1,0 +1,122 @@
+package mypackage;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+public class Test extends JFrame implements ActionListener,Runnable{
+    JPanel NorthPanel=new JPanel();
+    JPanel SouthPanel=new JPanel();
+    JTextField sleep = new JTextField("100",5);
+    JTextField number = new JTextField(5);
+    JTextField southText;
+    Thread thread;
+    DefaultTableModel tablemodel;
+    JTable jtable;
+
+	public Test(String filename) {
+		this.setBounds(300, 300, 600, 300);
+		setTitle(filename);
+		this.getContentPane().add(NorthPanel,"North");
+        NorthPanel.add(new JLabel("Number:"));
+        NorthPanel.add(number);
+        NorthPanel.add(new JLabel("SleepTime:"));
+        NorthPanel.add(sleep);
+        JButton jb = new JButton("计算");
+        this.getContentPane().add(this.SouthPanel=new JPanel(),"South");
+        this.SouthPanel.add(this.southText=new JTextField(filename,20),"South");
+        this.thread=new Thread(this);
+        this.thread.start();
+        this.tablemodel=new DefaultTableModel(0,0);
+		jtable=new JTable(this.tablemodel);
+		this.getContentPane().add(new JScrollPane(jtable));
+        jb.addActionListener(this);
+        NorthPanel.add(jb);
+        this.setVisible(true);
+	}
+	
+	public static Object[][] returnMatrix(int n){
+		Object matrix[][] = new Object[n][n];
+		int count = 1;
+		for(int i = 0;i < n;i++){
+			for(int j = 0;j < n;j++){
+				matrix[i][j] = count++;
+			}
+		}
+		return matrix;
+	}
+	
+	
+	public static Object[][] reverseMatrix(Object[][] matrix){
+    	int len =  matrix.length;
+    	for(int i = 0;i < len;i++){
+    		for(int j = 0;j <= i;j++){
+    			int temp =  (int) matrix[i][j];
+    			matrix[i][j] =  matrix[j][i];
+    			matrix[j][i] = temp;
+    		}
+    	}
+    	return  matrix;
+    }
+	
+	public void render(Object[][] n, int s) {
+		DefaultTableModel model = new DefaultTableModel(n[0].length,n[0].length);
+		for (int i = 0; i < n.length; i++) {
+			model.addRow(n[i]);
+		}
+		jtable.setModel(model);
+	}
+	
+	public static void main(String[] args) {
+		new Test("大数据191-202190310-张雨婷");
+	}
+	
+	
+	public static void printMatrix(Object[][] nArr){
+    	int row = nArr.length;
+    	for(int i = 0;i < row;i++){
+    		for(int j = 0;j < nArr[i].length;j++){
+    			System.out.print(nArr[i][j] + " ");
+    		}
+    	}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+			String nStr = number.getText();
+			String sStr = sleep.getText();
+			try {
+				int n = Integer.valueOf(nStr);
+				int s = Integer.valueOf(sStr);
+				Object[][] nArr = returnMatrix(n);
+				nArr = reverseMatrix(nArr);
+				render(nArr, s);
+			}catch (Exception e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(NorthPanel, "请检查输入内容", "提示",JOptionPane.WARNING_MESSAGE); 
+			}
+		}
+
+	public void run() {//滚动字
+		while(true) {
+		String str=this.southText.getText();
+		this.southText.setText(str.substring(1)+str.substring(0,1));
+		try {
+			Thread.sleep(Integer.parseInt(this.sleep.getText()));
+		} catch (NumberFormatException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	}
+		
+	}

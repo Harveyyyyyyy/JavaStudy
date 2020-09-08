@@ -1,0 +1,198 @@
+package mypackage;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+public class Test extends JFrame implements ActionListener,Runnable{
+    JPanel NorthPanel=new JPanel();
+    JPanel SouthPanel=new JPanel();
+    JTextField sleep = new JTextField("100",5);
+    JTextField number = new JTextField(5);
+    JTextField southText;
+    Thread thread;
+    DefaultTableModel tablemodel;
+    JTable jtable;
+    JButton jb,open,storage;
+
+	public Test(String filename) {
+		this.setBounds(300, 300, 600, 300);
+		setTitle(filename);
+		this.getContentPane().add(NorthPanel,"North");
+        NorthPanel.add(new JLabel("Number:"));
+        NorthPanel.add(number);
+        NorthPanel.add(new JLabel("SleepTime:"));
+        NorthPanel.add(sleep);
+        jb = new JButton("计算");
+        open=new JButton("打开");
+        storage=new JButton("保存");
+        this.getContentPane().add(this.SouthPanel=new JPanel(),"South");
+        this.SouthPanel.add(this.southText=new JTextField(filename,20),"South");
+        this.thread=new Thread(this);
+        this.thread.start();
+        this.tablemodel=new DefaultTableModel(0,0);
+		jtable=new JTable(this.tablemodel);
+		this.getContentPane().add(new JScrollPane(jtable));
+        NorthPanel.add(jb);
+        NorthPanel.add(open);
+        NorthPanel.add(storage);
+        jb.addActionListener(this);
+        open.addActionListener(this);
+        open.addActionListener(this);     
+        this.setVisible(true);
+	}
+	
+	public static Object[][] returnMatrix(int n){
+		Object matrix[][] = new Object[n][n];
+		int count = 1;
+		for(int i = 0;i < n;i++){
+			for(int j = 0;j < n;j++){
+				matrix[i][j] = count++;
+			}
+		}
+		return matrix;
+	}
+	
+	
+	public static Object[][] reverseMatrix(Object[][] matrix){
+    	int len =  matrix.length;
+    	for(int i = 0;i < len;i++){
+    		for(int j = 0;j <= i;j++){
+    			int temp =  (int) matrix[i][j];
+    			matrix[i][j] =  matrix[j][i];
+    			matrix[j][i] = temp;
+    		}
+    	}
+    	return  matrix;
+    }
+	
+	public void render(Object[][] n, int s) {
+		DefaultTableModel model = new DefaultTableModel(n.length,n.length);
+		for (int i = 0; i < n.length; i++) {
+			model.addRow(n[i]);
+		}
+		jtable.setModel(model);
+	}
+	
+	public static void main(String[] args) {
+		new Test("大数据191-202190310-张雨婷");
+	}
+	
+	
+	public static void printMatrix(Object[][] nArr){
+    	int row = nArr.length;
+    	for(int i = 0;i < row;i++){
+    		for(int j = 0;j < nArr[i].length;j++){
+    			System.out.print(nArr[i][j] + " ");
+    		}
+    	}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==jb) {
+			String nStr = number.getText();
+			String sStr = sleep.getText();
+			try {
+				int n = Integer.valueOf(nStr);
+				int s = Integer.valueOf(sStr);
+				Object[][] nArr = returnMatrix(n);
+				nArr = reverseMatrix(nArr);
+				render(nArr, s);
+			}catch (Exception e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(NorthPanel, "请检查输入内容", "提示",JOptionPane.WARNING_MESSAGE); 
+			}
+		}else if(e.getSource()==open) {
+			
+		}else if(e.getSource()==storage) {
+			
+		}
+	}
+
+	public void run() {//滚动字
+		while(true) {
+		String str=this.southText.getText();
+		this.southText.setText(str.substring(1)+str.substring(0,1));
+		try {
+			Thread.sleep(Integer.parseInt(this.sleep.getText()));
+		} catch (NumberFormatException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	}
+	protected void readFrom(String filename,DefaultTableModel tablemodel) {//打开
+		try {
+			InputStream in=new FileInputStream(filename);
+			DataInputStream datain=new DataInputStream(in);
+			tablemodel.setRowCount(1);
+			int i=0,j=0;
+			while(true) {
+				try {
+					for(j=0;j<tablemodel.getColumnCount();j++)
+						tablemodel.setValueAt(datain.readInt(), i, j);
+					i++;
+					tablemodel.addRow(new Object[tablemodel.getColumnCount()]);
+				}catch(EOFException eof) {
+					this.text_count.setText((i*tablemodel.getColumnCount()+j)+"");
+					while(j<tablemodel.getColumnCount())
+						tablemodel.setValueAt(null, i, j++);
+					break;
+				}
+			}
+		datain.close();
+		in.close();
+		}catch(FileNotFoundException ex) {
+			JOptionPane.showMessageDialog(this, filename+"文件不存在。");
+		}catch(IOException ex) {
+			JOptionPane.showMessageDialog(this, "读取文件时数据错误");
+		}
+	}
+	protected void writeTo(String filename,DefaultTableModel tablemodel) {//保存
+		try {
+			OutputStream out=new FileOutputStream(filename);
+			DataOutputStream dataout=new DataOutputStream(out);
+			int n=0;
+			for(int i=0;i<tablemodel.getRowCount();i++) {
+				for(int j=0;j<tablemodel.getColumnCount();j++) {
+					Object obj=tablemodel.getValueAt(i, j);
+					if(obj!=null&&obj instanceof Integer) {
+						dataout.writeInt(((Integer)obj).intValue());
+						n++;
+					}else if(obj!=null&&obj instanceof String&&!obj.equals("")) {
+						try {
+							dataout.writeInt(Integer.parseInt((String)obj));
+							n++;
+						}catch(NumberFormatException ex) {}
+					}
+				}
+				dataout.close();
+				out.close();
+
+			}
+		  }catch(FileNotFoundException ex) {
+							JOptionPane.showMessageDialog(this, "\""+filename+"\"文件不存在。");
+						}catch(IOException ex) {
+							JOptionPane.showMessageDialog(this, "写入文件是数据错误");
+						}
+					}
+		
+	}

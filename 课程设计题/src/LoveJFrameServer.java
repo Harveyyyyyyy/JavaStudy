@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+//可以双向画画 基于Socket 收发一个JFrame
 public class LoveJFrameServer {
 	public LoveJFrameServer(String name,int port) throws IOException{
 		ServerSocket server=new ServerSocket(port);

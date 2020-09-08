@@ -1,0 +1,111 @@
+package mypackage;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+public class Test extends JFrame {
+    JPanel CenterPanel=new JPanel();
+    JPanel NorthPanel=new JPanel();
+    JPanel SouthPanel=new JPanel();
+	JTable j = new JTable();
+    JPanel jp = new JPanel();
+
+	public Test() {
+		this.setBounds(300, 300, 600, 300);
+		setTitle("大数据191-202190310-张雨婷");
+        CenterPanel.setPreferredSize(new Dimension(400,400));
+        NorthPanel.setPreferredSize(new Dimension(400,50));
+        SouthPanel.setPreferredSize(new Dimension(400,50));
+        add(NorthPanel,BorderLayout.NORTH);
+        add(CenterPanel,BorderLayout.CENTER);
+        add(SouthPanel,BorderLayout.SOUTH);
+        NorthPanel.add(new JLabel("Number:"));
+        JTextField number = new JTextField(5);
+        NorthPanel.add(number);
+        NorthPanel.add(new JLabel("SleepTime:"));
+        JTextField sleep = new JTextField(5);
+        NorthPanel.add(sleep);
+        JButton jb = new JButton("计算");
+        jb.addActionListener(new ActionListener() {
+			
+		
+			public void actionPerformed(ActionEvent e) {
+				String nStr = number.getText();
+				String sStr = sleep.getText();
+				try {
+					int n = Integer.valueOf(nStr);
+					int s = Integer.valueOf(sStr);
+					Object[][] nArr = returnMatrix(n);
+					nArr = reverseMatrix(nArr);
+					render(nArr, s);
+				}catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(NorthPanel, "请检查输入内容", "提示",JOptionPane.WARNING_MESSAGE); 
+				}
+			}
+		});
+        NorthPanel.add(jb);
+        jp.add(j);
+        jp.setSize(400, 400);
+        CenterPanel.add(jp);
+        setVisible(true);
+	}
+	
+	public static Object[][] returnMatrix(int n){
+		Object matrix[][] = new Object[n][n];
+		int count = 1;
+		for(int i = 0;i < n;i++){
+			for(int j = 0;j < n;j++){
+				matrix[i][j] = count++;
+			}
+		}
+		return matrix;
+	}
+	
+	public static Object[][] reverseMatrix(Object[][] matrix){
+    	int len =  matrix.length;
+    	for(int i = 0;i < len;i++){
+    		for(int j = 0;j <= i;j++){
+    			int temp =  (int) matrix[i][j];
+    			matrix[i][j] =  matrix[j][i];
+    			matrix[j][i] = temp;
+    		}
+    	}
+    	return  matrix;
+    }
+	
+	public void render(Object[][] n, int s) {
+		DefaultTableModel model = new DefaultTableModel(n.length,n.length);
+		for (int i = 0; i < n.length; i++) {
+			model.addRow(n[i]);
+		}
+		j.setModel(model);
+	}
+	
+	public static void main(String[] args) {
+		new Test();
+	}
+	
+	
+	public static void printMatrix(Object[][] nArr){
+
+    	int row = nArr.length;
+
+    	for(int i = 0;i < row;i++){
+    		for(int j = 0;j < nArr[i].length;j++){
+    			System.out.print(nArr[i][j] + " ");
+    		}
+    	}
+	}
+}

@@ -1,7 +1,7 @@
 
 
 
-//15min 讲解 PPt 类比报告  
+//15min 讲解 PPt 类比报告   第二周周一早上 31第一周
 //开学讲 录视频
 
 //socket和io通信难点 把love当作一个对象类 把整个对象传过去是否可行？————
@@ -11,6 +11,8 @@
 // Point 2020,8,19 From Line to Love 完成Socket通信 Pixel 的传输
 //最小化打开不能画出来 2020，8，20 (Problem) 
 //2020,8.25解决Socket和iofile问题 +++待解决list存储问题+++** list测试完毕 
+//2020，8.27大致全部完成 
+//改进2020，8....
 //@Harveyyyyyyy 
 import java.awt.*;
 import java.awt.event.*;
@@ -32,7 +34,7 @@ Runnable{
 	private JTextField sleeptime;
 	private LoveCanvas lovecanvas;
 	private MessageJDialog jdialog;
-	private ArrayList<Point> list;
+	private ArrayList<Point> list; 
 	private Socket socket;
 	private Thread socketThread;
 	private ObjectOutputStream objout;
@@ -43,7 +45,7 @@ Runnable{
 	private File file;
 	String[] textstr= {"大小","位置x:","y:","缩放比例","旋转角度"};
 	String[] buttonstr= {"选择颜色","启动","中断"};
-	String[] numstr= {"7","0","0","10","4.7"};
+	String[] numstr= {"7","0","0","10","4.7"};//不需要null
 	public LoveJFrame(String name) throws IOException {
 		super(name);
 		Dimension dim =this.getToolkit().getScreenSize();
@@ -58,8 +60,8 @@ Runnable{
 		sleeppanel.add(sleeptime=new JTextField("5",10));
 		sleeppanel.add(this.writeButton=new JButton("保存"));
 		sleeppanel.add(this.readButton=new JButton("打开"));
-		this.writeButton.addActionListener(this);
-		this.readButton.addActionListener(this);
+		this.writeButton.addActionListener(this);//
+		this.readButton.addActionListener(this);//   不做匿名类
 		this.buttons=new JButton[buttonstr.length];
 		for(int i=0;i<buttonstr.length;i++) {
 			cmdpanel.add(this.buttons[i]=new JButton(buttonstr[i]));
@@ -110,13 +112,11 @@ Runnable{
 			lovecanvas.thread.start();
 			this.buttons[1].setEnabled(false);
 			this.buttons[2].setEnabled(true);
-			this.listitem();
 	    }
 	    if(ev.getSource()==this.buttons[2]) {
 	    	lovecanvas.thread.interrupt();
 			this.buttons[1].setEnabled(true);
 			this.buttons[2].setEnabled(false);
-			this.print();
 		}
 	    
 	    //保存文件！
@@ -133,20 +133,24 @@ Runnable{
 	    	if (fchooser.showOpenDialog(this)==0) {
 	    	    this.file = fchooser.getSelectedFile();
 	    	    CollectionFile.readFrom(this.file.getName(), this.list);//打开时要重画 读取对象
-	    	    this.lovecanvas.repaint();
+	    	    this.lovecanvas.OpenDraw(lovecanvas.getGraphics());//读取list中元素
 	   }
     }
 	    }	
-	//异常处理 输入格式错误之类
+	//异常处理 输入格式错误之类  paint处理完  
 	public void caretUpdate(CaretEvent ev) {
 		for(int i=0;i<textstr.length;i++) {
-			if(text[i].getText().isEmpty()||text[i].getText()=="") {
+			if(text[i].getText().isEmpty()) {//==null 空串 
 				this.jdialog.show("该空不能为空");
-			}else if(Double.parseDouble(text[i].getText())<0){
+			}else if(Double.parseDouble(text[i].getText())<0){ //  try
 				this.jdialog.show("该空不能为负数");
 			}else
 				try {
 					double x=Double.parseDouble(text[i].getText());
+					if(x<0) {
+						this.jdialog.show("该空不能为负数");
+						return;
+					}
 				}catch(NumberFormatException ex) {
 					this.jdialog.show("\""+text[i].getText()+"\"不能转换成浮点数.");
 				}
@@ -180,12 +184,16 @@ Runnable{
 			g.drawLine(0, y0, x0*2, y0);
 			g.drawLine(x0,0,x0,y0*2);
 			g.setColor(LoveJFrame.this.color);
-			for(int i=0;i<list.size();i++) {
-				try {
-				lovepoint=list.get(i);
-				}catch(IndexOutOfBoundsException ex) {		
-				}
-				g.fillOval(x0+lovepoint.x, y0+lovepoint.y, 1, 1);
+			//try text[i]常量  异常    return控制  one time
+				for(int i=0;i<n;i++) {
+					double angle=i*Math.PI/512;
+					double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+					double radius=a*(1-Math.cos(angle));
+					lovepoint.x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+					lovepoint.y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+					g.fillOval(x0+lovepoint.x, y0+lovepoint.y, 2, 2);//画画
+					list.add(new Point(lovepoint));
+				
 				try {
 					if(objout!=null)
 						objout.writeObject(lovepoint);
@@ -193,6 +201,27 @@ Runnable{
 				}
 				}
 			}
+		public void OpenDraw(Graphics g) {//paint 不能让图展现出来 另建函数
+			g.setColor(Color.black);
+			x0=this.getWidth()/2;
+			y0=this.getHeight()/2;
+			g.drawLine(0, y0, x0*2, y0);
+			g.drawLine(x0,0,x0,y0*2);
+			g.setColor(LoveJFrame.this.color);
+			for(int i=0;i<list.size();i++) {
+				try {
+				lovepoint=list.get(i);
+				}catch(IndexOutOfBoundsException ex) {
+					
+				}
+				g.fillOval(x0+lovepoint.x, y0+lovepoint.y, 2, 2);
+				try {
+					if(objout!=null)
+						objout.writeObject(lovepoint);
+				}catch(IOException ex) {
+				}
+			}
+		}
 	 
 			
 		
@@ -203,6 +232,7 @@ Runnable{
 		//画布中画画的线程run方法 （内部类）
 		public void run() {
 			while(true) {
+				n++;
 				try {
 					Thread.sleep(Integer.parseInt(sleeptime.getText()));
 					lovecanvas.repaint();
@@ -242,25 +272,26 @@ Runnable{
 	//main 主函数
 	public static void main(String args[]) throws IOException {
            new LoveJFrame("心形线","127.0.0.1", 10011);
+           // java.net.ConnectException: if 发不发
 	}
-	//测试 给list初值
-	public void listitem() {
-		for(int i=0;i<1200;i++) {
-			double angle=i*Math.PI/512;
-			double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
-			double radius=a*(1-Math.cos(angle));
-			int x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
-			int y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
-			list.add(new Point(x,y));
-		}
-	}
-	//测试 判断list中是否有值
-	public void print() {
-		for(int i=0;i<list.size();i++) {
-			if(list.get(i)!=null)
-			  System.out.println(list.get(i).toString());
-		}
-	}
+//	//测试 给list初值
+//	public void listitem() {
+//		for(int i=0;i<1200;i++) {
+//			double angle=i*Math.PI/512;
+//			double a=Double.parseDouble(text[0].getText())*Double.parseDouble(text[3].getText());
+//			double radius=a*(1-Math.cos(angle));
+//			int x=(int)Math.round(radius*Math.cos(angle+Double.parseDouble(text[4].getText())));
+//			int y=(int)Math.round(radius*Math.sin(angle+Double.parseDouble(text[4].getText())));
+//			list.add(new Point(x,y));
+//		}
+//	}
+//	//测试 判断list中是否有值
+//	public void print() {
+//		for(int i=0;i<list.size();i++) {
+//			if(list.get(i)!=null)
+//			  System.out.println(list.get(i).toString());
+//		}
+//	}
 	
 	
 	

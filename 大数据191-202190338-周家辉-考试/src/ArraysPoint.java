@@ -56,7 +56,7 @@ public class ArraysPoint extends JFrame implements ActionListener,Runnable {
 	}
 	public void actionPerformed(ActionEvent ev) {
 		if(ev.getActionCommand().equals("生成")||ev.getSource()==this.text_count) {
-			if(Integer.parseInt(this.text_count.getText())>=0&&Integer.parseInt(this.text_count.getText())<=50)
+			if(Integer.parseInt(this.text_count.getText())>=0&&Integer.parseInt(this.text_count.getText())<=50) 
 				random(this.tablemodel,this.text_count);
 			else 
 				JOptionPane.showMessageDialog(this, "超出0--50范围！");
@@ -101,7 +101,7 @@ public class ArraysPoint extends JFrame implements ActionListener,Runnable {
 			JOptionPane.showMessageDialog(this, "\""+text.getText()+"\"不能转换成整数。");
 		}
 	}
-	protected void readFrom(String filename,DefaultTableModel tablemodel) {
+	protected void readFrom(String filename,DefaultTableModel tablemodel) {//打开
 		try {
 			InputStream in=new FileInputStream(filename);
 			DataInputStream datain=new DataInputStream(in);
@@ -128,7 +128,7 @@ public class ArraysPoint extends JFrame implements ActionListener,Runnable {
 			JOptionPane.showMessageDialog(this, "读取文件时数据错误");
 		}
 	}
-	protected void writeTo(String filename,DefaultTableModel tablemodel) {
+	protected void writeTo(String filename,DefaultTableModel tablemodel) {//保存
 		try {
 			OutputStream out=new FileOutputStream(filename);
 			DataOutputStream dataout=new DataOutputStream(out);
@@ -169,21 +169,29 @@ public class ArraysPoint extends JFrame implements ActionListener,Runnable {
 					break;
 				}			}
 		}
-//     public int foundPoint(int[][] mat) {
-//    	 for(int i=0;i<mat.length;i++) {
-//    		 int max=mat[i][0];
-//    		 int min=mat[i][0];
-//    		 for(int j=0;j<mat[i].length;j++) {
-//    			 if(mat[i][j]>max)
-//    				 max=mat[i][j];
-//    			 if(mat[i][j]<min)
-//        			 min=mat[i][j];
-//    		 }	 
-//     }	 
-//     }
+     public int foundPoint(int[][] mat) {//行上最大，列上最小
+    	 int max=0,min=0,result = 0;
+    	 for(int i=0;i<mat.length;i++) {
+    		    max=mat[i][0];
+    		 for(int j=0;j<mat[i].length;j++) {
+    			 if(mat[i][j]>max)
+    				 max=mat[i][j+1];
+    		 }
+    	 }
+    	 for(int j=0;j<10;j++) {
+    		 for(int i=0;i<mat.length;i++) {
+    			 if(mat[i][j]<min)
+    				 min=mat[i][j];
+    		 }
+    	 }
+    	 if(min==max)
+    		 result=min;
+    	 return result;
+     }
 	
 	public static void main(String args[]) {
 		new ArraysPoint("大数据191-202190338-周家辉-8!");
+		
 	}
 
 }
